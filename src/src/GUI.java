@@ -7,17 +7,17 @@ import java.util.ArrayList;
 public class GUI {
     //class variables that other methods in this specific class can see
     //initializing an arraylist to be resizeable and having it work to count the steps of exectuion.
-    ArrayList<int[]> steps = new ArrayList<int[]>(); //an arraylist with forced data type of int
+    ArrayList<int[]> steps = new ArrayList<>(); //an arraylist with forced data type of int
     int currentStep = 0;
     private String sortType;
-    private JLabel label;
-    private JFrame frame;
-    private JPanel panel;
-    private JButton button;
-    private JTextField arrtxt;
-    private JLabel dispArr;
-    private JComboBox<String> comboBox;
-    private JButton stepButton;
+    private final JLabel label;
+    private final JFrame frame;
+    private final JPanel panel;
+    private final JButton button;
+    private final JTextField arrtxt;
+    private final JLabel dispArr;
+    private final JComboBox<String> comboBox;
+    private final JButton stepButton;
     BarPanel barPanel;
 
     // Constructor
@@ -37,7 +37,7 @@ public class GUI {
         inputPanel.add(arrtxt);
 
         // drop down menu to select type of sort
-        String[] options = {"Choose Sort Type", "bubble sort", "InsertionSort", "Selection Sort"};
+        String[] options = {"Choose Sort Type", "Bubble sort", "InsertionSort", "Selection Sort"};
         comboBox = new JComboBox<>(options);
         comboBox.addActionListener(new ComboSort()); //creating a seperate event action listener for the dropdown menu
         comboBox.setEditable(false);
@@ -51,7 +51,7 @@ public class GUI {
         // Button to start sorting
         button = new JButton("Sort");
         button.addActionListener(new SortButton()); //seperate action listener event unaffected by the dropdown menu one
-        panel.add(button, BorderLayout.EAST);
+        panel.add(button, BorderLayout.SOUTH);
 
         barPanel = new BarPanel(); //importing the class that visualizes the data for me
         panel.add(barPanel, BorderLayout.CENTER);
@@ -59,7 +59,7 @@ public class GUI {
         //button to make user walk through step-by-step
         stepButton = new JButton("Step");
         stepButton.addActionListener(new StepButton());
-        panel.add(stepButton, BorderLayout.SOUTH);
+        inputPanel.add(stepButton, BorderLayout.SOUTH);
 
         //final window adjustments and default setups
         frame.add(panel);
@@ -67,6 +67,7 @@ public class GUI {
         frame.setSize(1000, 1200);
         frame.pack();
         frame.setVisible(true); // Make sure frame is visible
+        frame.setLocationRelativeTo(null);
 
 
     }
@@ -103,16 +104,15 @@ public class GUI {
                     case "bubble sort":
                         //state->steps.add(state.clone) is a function passed to the consumer as an argument
                         //it clones the current array and adds it to our arraylist steps
-                        BubbleSort.sort(numbers, state -> steps.add(state.clone()));
+                        BubbleSort.sort(numbers, state -> steps.add(state.clone()), selectedIndex -> barPanel.setSelectedIndex(selectedIndex));
                         System.out.println("used Bubble sort");
                         break;
                     case "InsertionSort":
-                        InsertionSort.sort(numbers, state -> steps.add(state.clone()));
+                        InsertionSort.sort(numbers, state -> steps.add(state.clone()), selectedIndex -> barPanel.setSelectedIndex(selectedIndex));
                         System.out.println("used InsertionSort");
                         break;
                     case "Selection Sort":
-                        SelectionSort.sort(numbers, state -> steps.add(state.clone()));
-                        System.out.println("used Selection sort");
+                        SelectionSort.sort(numbers, state -> steps.add(state.clone()), index -> barPanel.setSelectedIndex(index));                        System.out.println("used Selection sort");
                         break;
                     default:
                         dispArr.setText("Please select a valid sort type.");
@@ -131,7 +131,7 @@ public class GUI {
                 }
 
                 // Display sorted array
-                dispArr.setText("Sorted: " + sorted.toString());
+                dispArr.setText("Sorted: " + sorted);
 
             }
             //if anypart of the above try fails. it will catch the error and do this code block instead
@@ -169,7 +169,7 @@ public class GUI {
                 }
 
                 // Updating the display component
-                dispArr.setText("Step " + (currentStep + 1) + ": " + stepDisplay.toString());
+                dispArr.setText("Step " + (currentStep + 1) + ": " + stepDisplay);
 
                 // Move to the next step
                 currentStep++;

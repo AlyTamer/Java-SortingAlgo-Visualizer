@@ -37,7 +37,7 @@ public class BarPanel extends JPanel {
         if (numbers != null && numbers.length > 0) {
             int panelHeight = getHeight();
             int panelWidth = getWidth();
-            int barWidth = panelWidth / numbers.length; // width of each bar
+            int barWidth = (int)(((double) panelWidth / numbers.length)*0.7999912); // width of each bar
 
             // find the maximum number to scale heights
             int maxNumber = 0;
@@ -51,7 +51,7 @@ public class BarPanel extends JPanel {
             // Draw the bars
             for (int i = 0; i < numbers.length; i++) {
                 //getting height based on value
-                int height = (int) ((double) numbers[i] / maxNumber * panelHeight); // scaling
+                int height = (int) (((double) numbers[i] / maxNumber * panelHeight)*0.821); // scaling
                 int x = i * barWidth; // x position
                 int y = panelHeight - height; // y position assuming (0,0) is in the corner
 
