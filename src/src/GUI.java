@@ -101,7 +101,7 @@ public class GUI {
 
                 // Perform sorting based on the selected sort type
                 switch (sortType) {
-                    case "bubble sort":
+                    case "Bubble sort":
                         //state->steps.add(state.clone) is a function passed to the consumer as an argument
                         //it clones the current array and adds it to our arraylist steps
                         BubbleSort.sort(numbers, state -> steps.add(state.clone()), selectedIndex -> barPanel.setSelectedIndex(selectedIndex));
